@@ -24,6 +24,7 @@
 		9B89A59021451DF90018B7D0 /* GridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89A58F21451DF90018B7D0 /* GridViewModel.swift */; };
 		9B89A59221451E0B0018B7D0 /* AlbumCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89A59121451E0B0018B7D0 /* AlbumCellViewModel.swift */; };
 		9B89A59421451FCB0018B7D0 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89A59321451FCB0018B7D0 /* Observable.swift */; };
+		9B89A596214557B50018B7D0 /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89A595214557B50018B7D0 /* AlbumModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		9B89A58F21451DF90018B7D0 /* GridViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewModel.swift; sourceTree = "<group>"; };
 		9B89A59121451E0B0018B7D0 /* AlbumCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCellViewModel.swift; sourceTree = "<group>"; };
 		9B89A59321451FCB0018B7D0 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		9B89A595214557B50018B7D0 /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				9B89A5892144F4980018B7D0 /* FlickrResponse.swift */,
+				9B89A595214557B50018B7D0 /* AlbumModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				9B89A58C2144FDB40018B7D0 /* FlickrPaginatedAPIService.swift in Sources */,
 				9B89A59421451FCB0018B7D0 /* Observable.swift in Sources */,
 				9B89A55A2144CE350018B7D0 /* ViewController.swift in Sources */,
+				9B89A596214557B50018B7D0 /* AlbumModel.swift in Sources */,
 				9B89A59221451E0B0018B7D0 /* AlbumCellViewModel.swift in Sources */,
 				9B89A5582144CE350018B7D0 /* AppDelegate.swift in Sources */,
 				9B89A5862144E2F50018B7D0 /* RequestType.swift in Sources */,

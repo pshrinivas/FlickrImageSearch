@@ -10,7 +10,11 @@ import Foundation
 
 struct AlbumCellViewModel{
     
-    var urlString : String
+    var url : URL?
     var title : String
     
+    init(albumModel : AlbumModel) {
+        url = albumModel.imageURL
+        title = albumModel.title
+    }
 }

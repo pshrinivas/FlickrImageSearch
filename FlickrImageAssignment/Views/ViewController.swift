@@ -20,7 +20,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         gridViewModel.albumArray.bind {[unowned self] (_) in
-            self.gridView.reloadData()
+            DispatchQueue.main.async {
+                self.gridView.reloadData()
+            }
         }
         
         service.fetch { (result) in
@@ -53,11 +55,14 @@ extension ViewController : UICollectionViewDelegate{
 extension ViewController :UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-        return 20
+        return gridViewModel.albumArray.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCollectionViewCell", for: indexPath)
+        var albumCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCollectionViewCell", for: indexPath) as! AlbumCollectionViewCell
+        let albumModel = gridViewModel.albumArray.value[indexPath.row]
+        albumCollectionViewCell.albumCellModel = AlbumCellViewModel(albumModel: albumModel)
+        return albumCollectionViewCell
     }
     
 }

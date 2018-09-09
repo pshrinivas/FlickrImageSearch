@@ -46,6 +46,9 @@
                                             <constraint firstAttribute="trailing" secondItem="w10-io-6Lj" secondAttribute="trailing" id="NYe-f5-oWJ"/>
                                             <constraint firstAttribute="bottom" secondItem="w10-io-6Lj" secondAttribute="bottom" id="xf1-IH-USI"/>
                                         </constraints>
+                                        <connections>
+                                            <outlet property="imgView" destination="w10-io-6Lj" id="4hu-SN-X9r"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
