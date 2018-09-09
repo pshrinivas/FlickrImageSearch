@@ -11,9 +11,26 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var gridView: UICollectionView!
+    
+    private var gridViewModel = GridViewModel(albumArray: Observer([AlbumModel]()))
+    
+    var service = FlickrPaginatedAPIService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        gridViewModel.albumArray.bind {[unowned self] (_) in
+            self.gridView.reloadData()
+        }
+        
+        service.fetch { (result) in
+            switch result{
+            case .success(let modelArray):
+                self.gridViewModel.add(from: modelArray)
+            case .failure(let err):
+                break
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,7 +51,8 @@ extension ViewController : UICollectionViewDelegate{
 }
 
 extension ViewController :UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
+    {
         return 20
     }
     
