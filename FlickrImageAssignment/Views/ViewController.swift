@@ -14,10 +14,18 @@ class ViewController: UIViewController {
     
     private var gridViewModel = GridViewModel(albumArray: Observer([AlbumModel]()))
     
-    var service = FlickrPaginatedAPIService()
+    private var service = FlickrPaginatedAPIService()
+    
+    private lazy var refreshControl: UIRefreshControl = { [unowned self] in
+        let _refreshControl = UIRefreshControl()
+        _refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return _refreshControl
+        }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        gridView.refreshControl = refreshControl
         
         gridViewModel.albumArray.bind {[unowned self] (_) in
             DispatchQueue.main.async {
@@ -34,16 +42,33 @@ class ViewController: UIViewController {
     }
     
     func fetch(){
-        service.fetch { (result) in
+        
+        gridView.refreshControl?.beginRefreshing()
+        
+        service.fetch {[weak self] (result) in
+            
+            guard let `self` = self else{
+                return
+            }
+            
             switch result{
             case .success(let modelArray):
                 self.gridViewModel.add(from: modelArray)
-            case .failure(let _):
+            case .failure(_):
                 break
+            }
+            DispatchQueue.main.async {
+                self.gridView.refreshControl?.endRefreshing()
             }
         }
     }
-
+    
+    @objc func refresh(){
+        gridViewModel.clearAll()
+        service = FlickrPaginatedAPIService()
+        fetch()
+    }
+    
 }
 
 extension ViewController : UICollectionViewDelegate{

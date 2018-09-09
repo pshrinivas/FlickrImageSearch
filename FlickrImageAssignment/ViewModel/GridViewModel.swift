@@ -16,4 +16,8 @@ struct GridViewModel{
         albumArray.value.append(contentsOf: array)
     }
     
+    func clearAll(){
+        albumArray.value.removeAll()
+    }
+    
 }
