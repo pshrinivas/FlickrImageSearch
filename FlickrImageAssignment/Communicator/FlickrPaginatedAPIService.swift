@@ -13,11 +13,12 @@ class FlickrPaginatedAPIService{
     // first Page of any request
     var page = 1
     let communicator = NetworkCommunicator()
-    let urlString = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=3e7cc266ae2b0e0d78e279ce8e361736&format=json&nojsoncallback=1&safe_search=1&text=kitten&page="
+    let urlString = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=3e7cc266ae2b0e0d78e279ce8e361736&format=json&nojsoncallback=1&safe_search=1&text="
  
-    func fetch(onCompletion : CompletionHandlerWithModal<Result<[AlbumModel]>> = nil){
+    func fetch(searchKeyWord : String, onCompletion : CompletionHandlerWithModal<Result<[AlbumModel]>> = nil){
         
-        if let url = URL(string: urlString){
+        let generatedUrlString = urlString + searchKeyWord + "&page=\(page)"
+        if let url = URL(string: generatedUrlString){
             communicator.makeRequest(with: url) {[weak self] (result : Result<FlickrParentResponse>) in
                 
                 guard let strongSelf = self else{
@@ -34,6 +35,9 @@ class FlickrPaginatedAPIService{
                     break
                 }
             }
+        }
+        else{
+            onCompletion?(.failure(nil))
         }
         
         

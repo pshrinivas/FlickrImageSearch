@@ -12,9 +12,13 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var gridView: UICollectionView!
     
-    private var gridViewModel = GridViewModel(albumArray: Observer([AlbumModel]()))
+    @IBOutlet weak var searchTextField: UITextField!
     
+    private var gridViewModel = GridViewModel(albumArray: Observer([AlbumModel]()))
     private var service = FlickrPaginatedAPIService()
+    
+    // some query by default
+    private var searchQuery = "kitten"
     
     private lazy var refreshControl: UIRefreshControl = { [unowned self] in
         let _refreshControl = UIRefreshControl()
@@ -26,6 +30,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         gridView.refreshControl = refreshControl
+        
+        // Maintaining searchQuery in box
+        searchTextField.text = searchQuery
         
         gridViewModel.albumArray.bind {[unowned self] (_) in
             DispatchQueue.main.async {
@@ -45,7 +52,7 @@ class ViewController: UIViewController {
         
         gridView.refreshControl?.beginRefreshing()
         
-        service.fetch {[weak self] (result) in
+        service.fetch(searchKeyWord: searchQuery) {[weak self] (result) in
             
             guard let `self` = self else{
                 return
@@ -69,6 +76,13 @@ class ViewController: UIViewController {
         fetch()
     }
     
+    @IBAction func search(_ sender: Any) {
+        if let newSearchText = searchTextField.text,
+            newSearchText.trimmingCharacters(in: [" "]) != ""{
+            searchQuery = newSearchText
+            refresh()
+        }
+    }
 }
 
 extension ViewController : UICollectionViewDelegate{
