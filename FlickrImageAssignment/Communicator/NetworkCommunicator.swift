@@ -28,10 +28,22 @@ class NetworkCommunicator {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-            let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            let task = session.dataTask(with: request as URLRequest, completionHandler: {[weak self] data, response, error -> Void in
                 
-                if let err = error{
-                    onCompletion?(.failure(err))
+                guard let strongSelf = self else{
+                    return
+                }
+                
+                if let err = error as NSError?{
+                    if err.code == 204 || err.code == 404 {
+                        onCompletion?(.failure(NSError.error(errorCode: ErrorCodes.noNextPage)))
+                    }
+                    else if err.code == NSURLErrorTimedOut{
+                        onCompletion?(.failure(NSError.error(errorCode: ErrorCodes.timeOut)))
+                    }
+                    else{
+                        onCompletion?(.failure(err))
+                    }
                 }
                 
                 guard let data = data else{
@@ -40,12 +52,13 @@ class NetworkCommunicator {
                 }
                 
                 print("Response: \(String(describing: String(data: data, encoding: .utf8)))")
+                strongSelf.isRequestInProgress = false
                 onCompletion?(.success(data))
             })
             task.resume()
         }
         else{
-            onCompletion?(.failure(nil))
+            onCompletion?(.failure(NSError.error(errorCode: ErrorCodes.requestInProgress)))
         }
     }
     

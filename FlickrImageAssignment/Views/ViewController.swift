@@ -27,11 +27,6 @@ class ViewController: UIViewController {
         
         fetch()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -52,7 +47,11 @@ class ViewController: UIViewController {
 }
 
 extension ViewController : UICollectionViewDelegate{
-    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath){
+        if indexPath.row > gridViewModel.albumArray.value.count - 15{
+            fetch()
+        }
+    }
 }
 
 extension ViewController :UICollectionViewDataSource{

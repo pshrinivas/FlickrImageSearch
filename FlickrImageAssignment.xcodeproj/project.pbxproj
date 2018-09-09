@@ -26,6 +26,7 @@
 		9B89A596214557B50018B7D0 /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89A595214557B50018B7D0 /* AlbumModel.swift */; };
 		9B89A59821457CAB0018B7D0 /* ImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89A59721457CAB0018B7D0 /* ImageFetcher.swift */; };
 		9B89A59A214592440018B7D0 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B89A599214592440018B7D0 /* placeholder.png */; };
+		9B89A5A02145977C0018B7D0 /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89A59F2145977C0018B7D0 /* ErrorCodes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		9B89A595214557B50018B7D0 /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
 		9B89A59721457CAB0018B7D0 /* ImageFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFetcher.swift; sourceTree = "<group>"; };
 		9B89A599214592440018B7D0 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		9B89A59F2145977C0018B7D0 /* ErrorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCodes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 				9B89A5832144E2CD0018B7D0 /* Result.swift */,
 				9B89A5852144E2F50018B7D0 /* RequestType.swift */,
 				9B89A58B2144FDB40018B7D0 /* FlickrPaginatedAPIService.swift */,
+				9B89A59F2145977C0018B7D0 /* ErrorCodes.swift */,
 			);
 			path = Communicator;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				9B89A5582144CE350018B7D0 /* AppDelegate.swift in Sources */,
 				9B89A5862144E2F50018B7D0 /* RequestType.swift in Sources */,
 				9B89A5822144E27B0018B7D0 /* NetworkCommunicator.swift in Sources */,
+				9B89A5A02145977C0018B7D0 /* ErrorCodes.swift in Sources */,
 				9B89A59021451DF90018B7D0 /* GridViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
