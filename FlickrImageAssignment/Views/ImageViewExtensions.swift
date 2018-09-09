@@ -14,33 +14,32 @@ let imageCache = NSCache<NSString, UIImage>()
 
 extension UIImageView {
     
-    func setImage(from urlString: String, placeHolder: UIImage?) {
+    func setImage(from url: URL, placeHolder: UIImage?) {
         
-        self.image = nil
-        if let cachedImage = imageCache.object(forKey: urlString as NSString) {
+        self.image = placeHolder
+        if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
             self.image = cachedImage
             return
         }
         
-        if let url = URL(string: urlString) {
-            URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
+        URLSession.shared.dataTask(with: url, completionHandler: {[weak self] (data, response, error) in
                 
                 if error != nil {
                     print("Error while downloading from URL: \(String(describing: error))")
                     DispatchQueue.main.async {
-                        self.image = placeHolder
+                        self?.image = placeHolder
                     }
                     return
                 }
+            
                 DispatchQueue.main.async {
                     if let data = data {
                         if let downloadedImage = UIImage(data: data) {
-                            imageCache.setObject(downloadedImage, forKey: NSString(string: urlString))
-                            self.image = downloadedImage
+                            imageCache.setObject(downloadedImage, forKey: url.absoluteString as NSString)
+                            self?.image = downloadedImage
                         }
                     }
                 }
             }).resume()
-        }
     }
 }
