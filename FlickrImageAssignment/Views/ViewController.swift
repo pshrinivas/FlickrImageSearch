@@ -77,10 +77,22 @@ class ViewController: UIViewController {
     }
     
     @IBAction func search(_ sender: Any) {
+        
+        searchTextField.resignFirstResponder()
+        
         if let newSearchText = searchTextField.text,
             newSearchText.trimmingCharacters(in: [" "]) != ""{
             searchQuery = newSearchText
             refresh()
+        }
+        else{
+            let alert = UIAlertController(title: "Invalid String", message: "string Cannot be blank", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) in
+                self.searchTextField.text = self.searchQuery
+            }
+            alert.addAction(cancel)
+            present(alert, animated: false, completion: nil)
+
         }
     }
 }
