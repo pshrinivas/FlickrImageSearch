@@ -25,14 +25,7 @@ class ViewController: UIViewController {
             }
         }
         
-        service.fetch { (result) in
-            switch result{
-            case .success(let modelArray):
-                self.gridViewModel.add(from: modelArray)
-            case .failure(let err):
-                break
-            }
-        }
+        fetch()
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,7 +37,17 @@ class ViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
         gridView.collectionViewLayout.invalidateLayout()
     }
-
+    
+    func fetch(){
+        service.fetch { (result) in
+            switch result{
+            case .success(let modelArray):
+                self.gridViewModel.add(from: modelArray)
+            case .failure(let _):
+                break
+            }
+        }
+    }
 
 }
 
@@ -59,7 +62,7 @@ extension ViewController :UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var albumCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCollectionViewCell", for: indexPath) as! AlbumCollectionViewCell
+        let albumCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCollectionViewCell", for: indexPath) as! AlbumCollectionViewCell
         let albumModel = gridViewModel.albumArray.value[indexPath.row]
         albumCollectionViewCell.albumCellModel = AlbumCellViewModel(albumModel: albumModel)
         return albumCollectionViewCell
