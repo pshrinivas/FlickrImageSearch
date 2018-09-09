@@ -59,6 +59,10 @@ struct FlickrResponse : Codable{
     
 }
 
+struct FlickrParentResponse: Codable{
+    var photos : FlickrResponse
+}
+
 /*
  "id": "29627245727",
  "owner": "83916432@N07",
@@ -76,6 +80,6 @@ struct AlbumModel : Codable{
     var owner : String
     var secret : String
     var server : String
-    var farm : String
+    var farm : Int
     var title : String
 }
