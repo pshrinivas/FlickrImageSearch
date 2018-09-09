@@ -37,6 +37,33 @@ extension ViewController :UICollectionViewDataSource{
         return collectionView.dequeueReusableCell(withReuseIdentifier: "AlbumCollectionViewCell", for: indexPath)
     }
     
+}
+
+extension ViewController : UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize{
+        
+        let orientation = UIApplication.shared.statusBarOrientation
+        let screenWidth = self.view.frame.size.width
+        
+        if (orientation == UIInterfaceOrientation.portrait || orientation == UIInterfaceOrientation.portraitUpsideDown){
+            return CGSize(width: screenWidth/2 - 1, height: screenWidth/2 - 1)
+        }
+        return CGSize(width: screenWidth/3 - 1, height: screenWidth/3 - 1)
+        
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 0, 0, 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
+    }
 }
 
