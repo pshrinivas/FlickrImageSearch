@@ -13,5 +13,47 @@ public typealias CompletionHandlerWithModal<T> = ((T)->Void)?
 class NetworkCommunicator {
     
     func makeRequest(with url : URL, params : [String : String] = [String : String](), method : RequestType = .GET, onCompletion : CompletionHandlerWithModal<Result<Data>> = nil){
+    
+            var request = URLRequest(url: url)
+            let session = URLSession.shared
+            request.httpMethod = method.rawValue
+        
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+        
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+        
+            let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+                print("Response: \(String(describing: response))")
+                
+                guard let data = data else{
+                    return
+                }
+                
+                onCompletion?(.success(data))
+            })
+            task.resume()
+    }
+    
+    func makeRequest<T : Codable>(with url : URL, params : [String : String] = [String : String](), method : RequestType = .GET, onCompletion : CompletionHandlerWithModal<Result<T>> = nil){
+        
+            self.makeRequest(with: url, params: params, method: method) { (resultData : Result<Data>) in
+                switch resultData{
+                case .success(let data):
+                    do{
+                        let aDecoder = JSONDecoder()
+                        
+                        let decodedModel = try aDecoder.decode(T.self, from: data)
+                        onCompletion?(.success(decodedModel))
+                    }
+                    catch let e{
+                        print("Error : \(e)")
+                        onCompletion?(.failure(e))
+                    }
+                    break
+                case.failure(let err) :
+                    onCompletion?(.failure(err))
+                }
+            }
     }
 }
