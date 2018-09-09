@@ -12,8 +12,13 @@ public typealias CompletionHandlerWithModal<T> = ((T)->Void)?
 
 class NetworkCommunicator {
     
-    func makeRequest(with url : URL, params : [String : String] = [String : String](), method : RequestType = .GET, onCompletion : CompletionHandlerWithModal<Result<Data>> = nil){
+    private var isRequestInProgress = false
     
+    func makeRequest(with url : URL, params : [String : String] = [String : String](), method : RequestType = .GET, onCompletion : CompletionHandlerWithModal<Result<Data>> = nil){
+        
+        if !isRequestInProgress{
+            isRequestInProgress = true
+            
             var request = URLRequest(url: url)
             let session = URLSession.shared
             request.httpMethod = method.rawValue
@@ -26,13 +31,22 @@ class NetworkCommunicator {
             let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
                 print("Response: \(String(describing: response))")
                 
+                if let err = error{
+                    onCompletion?(.failure(err))
+                }
+                
                 guard let data = data else{
+                    onCompletion?(.failure(nil))
                     return
                 }
                 
                 onCompletion?(.success(data))
             })
             task.resume()
+        }
+        else{
+            onCompletion?(.failure(nil))
+        }
     }
     
     func makeRequest<T : Codable>(with url : URL, params : [String : String] = [String : String](), method : RequestType = .GET, onCompletion : CompletionHandlerWithModal<Result<T>> = nil){
