@@ -36,7 +36,7 @@ class ImageFetcher{
             if error != nil {
                 print("Error while downloading from URL: \(String(describing: error))")
                 DispatchQueue.main.async {
-                    imageView.image = placeHolder
+                    imageView.image = #imageLiteral(resourceName: "noImageFound.jpg")
                 }
                 return
             }

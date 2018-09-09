@@ -30,7 +30,7 @@ class AlbumCollectionViewCell : UICollectionViewCell{
             return
         }
         
-        fetcher.setImage(url: url, imageView: imgView, placeHolder: #imageLiteral(resourceName: "noImageFound.jpg"))
+        fetcher.setImage(url: url, imageView: imgView, placeHolder: #imageLiteral(resourceName: "placeholder.png"))
     }
     
     override func prepareForReuse() {
