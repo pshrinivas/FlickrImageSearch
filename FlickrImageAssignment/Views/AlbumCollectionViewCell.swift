@@ -18,16 +18,25 @@ class AlbumCollectionViewCell : UICollectionViewCell{
         }
     }
     
+    var fetcher : ImageFetcher!
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        fetcher = ImageFetcher()
+    }
+    
     func display() {
         guard let url = albumCellModel.url else{
             return
         }
         
-        imgView.setImage(from: url, placeHolder: #imageLiteral(resourceName: "noImageFound.jpg"))
+        fetcher.setImage(url: url, imageView: imgView, placeHolder: #imageLiteral(resourceName: "noImageFound.jpg"))
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         self.imgView.image = nil
+        fetcher.cancel()
+        fetcher = ImageFetcher()
     }
 }
