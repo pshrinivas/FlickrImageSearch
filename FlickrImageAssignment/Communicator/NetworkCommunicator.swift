@@ -29,7 +29,6 @@ class NetworkCommunicator {
             request.addValue("application/json", forHTTPHeaderField: "Accept")
         
             let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
-                print("Response: \(String(describing: response))")
                 
                 if let err = error{
                     onCompletion?(.failure(err))
@@ -40,6 +39,7 @@ class NetworkCommunicator {
                     return
                 }
                 
+                print("Response: \(String(describing: String(data: data, encoding: .utf8)))")
                 onCompletion?(.success(data))
             })
             task.resume()
