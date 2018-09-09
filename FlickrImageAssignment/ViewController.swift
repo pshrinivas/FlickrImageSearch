@@ -20,6 +20,11 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        gridView.collectionViewLayout.invalidateLayout()
+    }
 
 
 }
@@ -44,13 +49,8 @@ extension ViewController : UICollectionViewDelegateFlowLayout{
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize{
         
-        let orientation = UIApplication.shared.statusBarOrientation
         let screenWidth = self.view.frame.size.width
-        
-        if (orientation == UIInterfaceOrientation.portrait || orientation == UIInterfaceOrientation.portraitUpsideDown){
-            return CGSize(width: screenWidth/2 - 1, height: screenWidth/2 - 1)
-        }
-        return CGSize(width: screenWidth/3 - 1, height: screenWidth/3 - 1)
+        return CGSize(width: screenWidth/3 - 2, height: screenWidth/3 - 2)
         
     }
     
