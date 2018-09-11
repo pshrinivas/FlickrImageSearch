@@ -23,11 +23,6 @@ class NetworkCommunicator {
             let session = URLSession.shared
             request.httpMethod = method.rawValue
         
-            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-        
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-        
             let task = session.dataTask(with: request as URLRequest, completionHandler: {[weak self] data, response, error -> Void in
                 
                 guard let strongSelf = self else{
@@ -35,14 +30,19 @@ class NetworkCommunicator {
                 }
                 
                 if let err = error as NSError?{
-                    if err.code == 204 || err.code == 404 {
-                        onCompletion?(.failure(NSError.error(errorCode: ErrorCodes.noNextPage)))
-                    }
-                    else if err.code == NSURLErrorTimedOut{
+                   if err.code == NSURLErrorTimedOut{
                         onCompletion?(.failure(NSError.error(errorCode: ErrorCodes.timeOut)))
                     }
                     else{
                         onCompletion?(.failure(err))
+                    }
+                    return
+                }
+                
+                if let statusCode = response?.httpStatusCode {
+                    if statusCode == 204 || statusCode == 404 {
+                        onCompletion?(.failure(NSError.error(errorCode: ErrorCodes.noNextPage)))
+                        return
                     }
                 }
                 
@@ -82,5 +82,12 @@ class NetworkCommunicator {
                     onCompletion?(.failure(err))
                 }
             }
+    }
+}
+
+extension URLResponse {
+    
+    var httpStatusCode: Int? {
+        return (self as? HTTPURLResponse)?.statusCode
     }
 }
