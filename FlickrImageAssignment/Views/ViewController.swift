@@ -14,8 +14,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var searchTextField: UITextField!
     
-    private var gridViewModel = GridViewModel(albumArray: Observer([AlbumModel]()))
-    private var service = FlickrPaginatedAPIService()
+    var gridViewModel = GridViewModel(albumArray: Observer([AlbumModel]()))
+    var service : FlickrServiceProtocol = FlickrPaginatedAPIService()
     
     // some query by default
     private var searchQuery = "kitten"
@@ -72,7 +72,7 @@ class ViewController: UIViewController {
     
     @objc func refresh(){
         gridViewModel.clearAll()
-        service = FlickrPaginatedAPIService()
+        service = service.copy(with: nil) as! FlickrServiceProtocol
         fetch()
     }
     

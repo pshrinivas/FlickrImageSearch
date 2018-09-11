@@ -8,8 +8,8 @@
 
 import Foundation
 
-class FlickrPaginatedAPIService{
-    
+class FlickrPaginatedAPIService : FlickrServiceProtocol{
+   
     // first Page of any request
     var page = 1
     let communicator = NetworkCommunicator()
@@ -40,9 +40,11 @@ class FlickrPaginatedAPIService{
             onCompletion?(.failure(nil))
         }
         
-        
-        
-        
     }
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        return FlickrPaginatedAPIService()
+    }
+    
     
 }
