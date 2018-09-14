@@ -14,29 +14,29 @@ The app lets you search images based on keywords and displays it grid format wit
 ## Class Details
 
 ### Views
-#### ViewController 
+- #### ViewController 
 This is the primary class which consists of collection view and search text field. It also encapsulates functionality like fetching, refreshing and searching. On fetching data it binds this data with viewmodel and hence render it
-#### AlbumCollectionViewCell
+- #### AlbumCollectionViewCell
 This is the view which is reused for displaying images fetched from service. It also renders image by downloading it asyncronously using image fetcher and also handles some important usecase like cancelling downloading while recycling.
 
 ### Communicator
-#### NetworkCommunicator
+- #### NetworkCommunicator
 This class will be basically used to fetch data from server. It is used to fetch data using http protocol like GET, POST. Has 2 methods on which fetches data as Data type or any Codable format.
-#### FlickrPaginatedAPIService
+- #### FlickrPaginatedAPIService
 This service maintains state so that it can be used for fetching consecutive pages. It internally uses network communicator class for fetching data.
 
 ### Models
-#### FlickrResponse
+- #### FlickrResponse
 This class represents the structure of response of every page from flicker service. Its is codable and hence used for parsing
-#### AlbumModel
+- #### AlbumModel
 This model represents data related to images been rendered. It encapsultes all related info and hence generates url for fetching images
 
 #### ViewModel
 GridViewModel represents data to be rendered in ViewController. AlbumCellViewModel represents data to be rendered in collection view cells, this is been generated while views are recycled.
 
 ### Utilities 
-#### ImageFetcher 
+- #### ImageFetcher 
 It is used for fetching images asyncronously and also setting images to imageview. Also takes care of stale requests which might not be relevent after recycling of view
 
-#### Observable 
+- #### Observable 
 Utility to monitor change of wrapped value can be useful incase we need to listen to change in values
