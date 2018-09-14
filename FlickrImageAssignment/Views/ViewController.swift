@@ -78,6 +78,16 @@ class ViewController: UIViewController {
     
     @IBAction func search(_ sender: Any) {
         
+        UIButton.animate(withDuration: 0.2,
+                         animations: {
+                            (sender as! UIButton).transform = CGAffineTransform(scaleX: 0.75, y: 0.76)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                (sender as! UIButton).transform = CGAffineTransform.identity
+                            })
+        })
+        
         searchTextField.resignFirstResponder()
         
         if let newSearchText = searchTextField.text,
